@@ -1,4 +1,3 @@
-
 # prompts: ⚡❯→➤
 
 # make some aliases for the colours: (could use normal escape sequences too)
@@ -35,9 +34,19 @@ ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[magenta]%}>>"
 ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[yellow]%}="
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%}?"
 
+
+RPROMPT='${return_code}[%T]%{$reset_color%}'
+
+function zle-line-init zle-keymap-select {
+    RPS1="$PR_YELLOW${${KEYMAP/vicmd/[NORMAL]}/(main|viins)/[INSERT]}%{$reset_color%}${return_code}[%T]%{$reset_color%}"
+    RPROMPT=$RPS1
+    zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
+
 PROMPT="${user_host}${current_dir}${git_branch}
 %B${PR_PROMPT}%b"
 
 # the right side prompt
-RPROMPT='${return_code}[%T]%{$reset_color%}'
-
+#RPROMPT='${return_code}[%T]%{$reset_color%}'
